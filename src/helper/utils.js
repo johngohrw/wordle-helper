@@ -16,7 +16,7 @@ export function removeWords(words, lettersToRemove) {
 
 export function getFiltersFromGameState(gameState) {
   const posFilter = {};
-  const negFilter = {};
+  const yellowFilter = {};
   const removeFilter = {};
   if (!gameState) {
     return { pos: null, neg: null, remove: null };
@@ -27,14 +27,14 @@ export function getFiltersFromGameState(gameState) {
         if (letter.state === 0) {
           removeFilter[letter.letter] = true;
         } else if (letter.state === 1) {
-          negFilter[letter.letter] = JSON.parse(key);
+          yellowFilter[letter.letter] = JSON.parse(key);
         } else if (letter.state === 2) {
           posFilter[letter.letter] = JSON.parse(key);
         }
       }
     });
   });
-  return { pos: posFilter, neg: negFilter, remove: removeFilter };
+  return { pos: posFilter, yellow: yellowFilter, remove: removeFilter };
 }
 
 export function positiveFilterer(wordsArray, positiveFilter) {
@@ -49,6 +49,23 @@ export function positiveFilterer(wordsArray, positiveFilter) {
     }
     index = JSON.parse(index);
     result = result.filter((word) => word[index] === letter);
+    return true;
+  });
+  return result;
+}
+
+export function yellowFilterer(wordsArray, yellowFilterer) {
+  let result = wordsArray;
+  if (!result) {
+    return result;
+  }
+  Object.entries(yellowFilterer).every(([letter, index]) => {
+    if (!letter || index === null) {
+      return false;
+    }
+    index = JSON.parse(index);
+    result = result.filter((word) => word.includes(letter));
+    result = result.filter((word) => !(word[index] === letter));
     return true;
   });
   return result;

@@ -4,16 +4,16 @@ import { WordBuilder } from "./helper/WordBuilder";
 import { useState } from "react";
 import {
   getFiltersFromGameState,
-  negativeFilterer,
   positiveFilterer,
   removeWords,
+  yellowFilterer,
 } from "./helper/utils";
 import possWordsData from "./helper/possWords.json";
 
 export function generatePossibleWords(gameState) {
   const {
     pos: posFilter,
-    neg: negFilter,
+    yellow: yellowFilter,
     remove: removeFilter,
   } = getFiltersFromGameState(gameState);
 
@@ -23,7 +23,7 @@ export function generatePossibleWords(gameState) {
   // console.log("1", filteredWords);
   filteredWords = positiveFilterer(filteredWords, posFilter);
   // console.log("2", filteredWords);
-  filteredWords = negativeFilterer(filteredWords, negFilter);
+  filteredWords = yellowFilterer(filteredWords, yellowFilter);
   // console.log("3", filteredWords);
   return filteredWords;
 }
