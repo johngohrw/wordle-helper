@@ -29,7 +29,6 @@ export function generatePossibleWords(gameState) {
 export function createLetterRanking(wordsArray) {
   const buckets = bucketing(wordsArray);
   const ranking = letterRanking(buckets);
-  console.log("r>", ranking);
   return ranking;
 }
 
