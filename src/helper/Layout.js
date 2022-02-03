@@ -1,6 +1,5 @@
 import { HelpButton } from "./HelpButton";
 
-
 export function Layout({ children }) {
   return (
     <div className="w-full flex flex-col items-center">
@@ -10,7 +9,7 @@ export function Layout({ children }) {
           style={{ letterSpacing: "4px" }}
         >
           <div className="absolute left-3 top-0">
-            <HelpButton className="h-8 sm:h-10" />
+            {/* <HelpButton className="h-8 sm:h-10" /> */}
           </div>
           <div>WORDLE HELPER</div>
         </div>
@@ -19,4 +18,3 @@ export function Layout({ children }) {
     </div>
   );
 }
-
