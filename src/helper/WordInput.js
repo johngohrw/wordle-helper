@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash";
-import { useRef, useState } from "react";
-import { AiFillEdit, AiFillCloseCircle } from "react-icons/ai";
+import { useRef, useEffect } from "react";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 export const wordStateTemplate = {
   0: {
@@ -31,9 +31,14 @@ const allStates = [
   { value: "correct", color: "#538D4E" },
 ];
 
-export function WordInput({ wordState, wordStateChange, ...rest }) {
+export function WordInput({ wordState, wordStateChange, focused, ...rest }) {
   const inputRef = useRef();
-  const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    if (focused) {
+      inputRef.current.focus();
+    }
+  }, [focused]);
 
   function getValueFromState(state) {
     return Object.values(state)
@@ -63,21 +68,7 @@ export function WordInput({ wordState, wordStateChange, ...rest }) {
 
   return (
     <div className={`flex`} {...rest}>
-      <button
-        title="Reset word"
-        onClick={() => {
-          handleStateReset();
-        }}
-        className="w-10 flex items-center justify-center"
-      >
-        <AiFillCloseCircle
-          style={{
-            height: "21px",
-            width: "21px",
-            color: "white",
-          }}
-        />
-      </button>
+      <div className="w-10" />
       <div
         className={`flex space-x-2 p-0.5 border-2 rounded-sm  ${
           focused ? "border-white" : "border-transparent"
@@ -89,10 +80,12 @@ export function WordInput({ wordState, wordStateChange, ...rest }) {
             style={{
               backgroundColor: allStates[col.state].color,
             }}
-            className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center cursor-pointer"
+            className="w-8 h-8 xs:w-12 xs:h-12 sm:w-16 sm:h-16 flex items-center justify-center cursor-pointer"
             onClick={() => {
+              if (focused) {
+                handleStateToggle(index);
+              }
               inputRef.current.focus();
-              handleStateToggle(index);
             }}
           >
             <span className="text-white font-semibold text-2xl sm:text-4xl select-none">
@@ -108,8 +101,6 @@ export function WordInput({ wordState, wordStateChange, ...rest }) {
       <input
         autoFocus
         type="text"
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
         style={{ opacity: 0, position: "absolute", pointerEvents: "none" }}
         ref={inputRef}
         onKeyPress={(event) => false}
@@ -122,13 +113,19 @@ export function WordInput({ wordState, wordStateChange, ...rest }) {
         value={getValueFromState(wordState)}
       />
       <button
-        title="Edit word"
+        title="Reset word"
         onClick={() => {
-          inputRef.current.focus();
+          handleStateReset();
         }}
         className="w-10 flex items-center justify-center"
       >
-        <AiFillEdit style={{ height: "21px", width: "21px", color: "white" }} />
+        <AiFillCloseCircle
+          style={{
+            height: "21px",
+            width: "21px",
+            color: "#a1a1a1",
+          }}
+        />
       </button>
     </div>
   );

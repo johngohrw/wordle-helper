@@ -11,6 +11,9 @@ import {
   yellowFilterer,
 } from "./helper/utils";
 import possWordsData from "./helper/possWords.json";
+import { LetterRank } from "./helper/LetterRank";
+import { WordList } from "./WordList";
+import { Tabs } from "./Tabs";
 
 export function generatePossibleWords(gameState) {
   const {
@@ -32,10 +35,24 @@ export function createLetterRanking(wordsArray) {
   return ranking;
 }
 
+const tabs = [
+  {
+    value: "words",
+    label: "Possible Words",
+  },
+  {
+    value: "rank",
+    label: "Letter Probability Ranking",
+  },
+];
+
 export default function App() {
   const [gameState, setGameState] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
   const [letterRanks, setLetterRanks] = useState(null);
+  const [searchDirty, setSearchDirty] = useState(false);
+
+  const [selectedTab, setSelectedTab] = useState(tabs[0].value);
 
   useEffect(() => {
     setLetterRanks(createLetterRanking(searchResult));
@@ -47,89 +64,44 @@ export default function App() {
         <div className="mb-6">
           <WordBuilder setGameState={setGameState} />
         </div>
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-6">
           <button
-            onClick={() => setSearchResult(generatePossibleWords(gameState))}
+            onClick={() => {
+              setSearchResult(generatePossibleWords(gameState));
+              setSearchDirty(true);
+            }}
             className="px-4 py-2 text-white bg-indigo-700 rounded-md font-semibold focus:ring-2 focus:ring-white"
           >
             Search words
           </button>
         </div>
-        {searchResult?.length > 0 && (
-          <div className="flex flex-col mb-8">
-            <div className="text-2xl flex text-center justify-center font-semibold text-gray-100 mb-2">
-              Possible Words
-            </div>
-            <div className="flex flex-wrap justify-center">
-              {searchResult.map((word) => (
-                <span class="inline-flex items-center mb-1.5 mr-1.5 px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-100 text-blue-800">
-                  {word}
-                </span>
-              ))}
-            </div>
+
+        {searchDirty && (
+          <div className="text-gray-200 flex justify-center mb-6">
+            {searchResult.length} words found
           </div>
         )}
-        {searchResult?.length > 0 && (
+
+        {searchDirty && (
+          <Tabs
+            className="mb-6"
+            tabs={tabs}
+            value={selectedTab}
+            onClick={(tab) => setSelectedTab(tab.value)}
+          />
+        )}
+
+        {searchDirty && selectedTab === "words" && (
+          <div className="flex flex-col mb-8">
+            <WordList words={searchResult} />
+          </div>
+        )}
+        {searchDirty && selectedTab === "rank" && (
           <div className="flex flex-col items-center mb-8">
-            <div className="text-2xl flex text-center justify-center font-semibold text-gray-100 mb-2">
-              Letter Probability Distribution
-            </div>
-            <LetterDistribution
-              wordList={searchResult}
-              letterRanks={letterRanks}
-            />
+            <LetterRank wordList={searchResult} letterRanks={letterRanks} />
           </div>
         )}
       </Layout>
     </div>
-  );
-}
-
-export function LetterDistribution({ wordList, letterRanks }) {
-  function getBadgeColorClass(percentage) {
-    if (percentage < 2) {
-      return "bg-gray-100 text-gray-800";
-    } else if (percentage < 8) {
-      return "bg-red-100 text-red-800";
-    } else if (percentage < 16) {
-      return "bg-yellow-100 text-yellow-800";
-    } else if (percentage < 30) {
-      return "bg-blue-100 text-blue-800b";
-    } else {
-      return "bg-green-100 text-green-800";
-    }
-  }
-  return (
-    <>
-      {wordList?.length > 0 && (
-        <div className="flex flex-row">
-          {letterRanks.map((col) => (
-            <div className="flex flex-col items-start border border-gray-500">
-              {col.map((letter) =>
-                letter.count ? (
-                  <div className="flex w-full justify-between items-center px-3 mb-2">
-                    <div className="w-5 text-xl font-semibold text-white flex items-center justify-center">
-                      {letter.letter}
-                    </div>
-                    <div>
-                      <span
-                        style={{ padding: "2px 6px" }}
-                        className={`inline-flex items-center rounded-full text-xs font-medium
-                          ${getBadgeColorClass(
-                            ((letter.count / wordList.length) * 100).toFixed(1)
-                          )}
-                          `}
-                      >
-                        {((letter.count / wordList.length) * 100).toFixed(1)}%
-                      </span>
-                    </div>
-                  </div>
-                ) : null
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-    </>
   );
 }

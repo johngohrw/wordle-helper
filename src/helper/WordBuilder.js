@@ -5,7 +5,9 @@ import { WordInput, wordStateTemplate } from "./WordInput";
 
 export function WordBuilder({ setGameState }) {
   const [wordsState, setWordState] = useState([cloneDeep(wordStateTemplate)]);
+  const [selectedInput, setSelectedInput] = useState(0);
   function handleWordAdd() {
+    setSelectedInput(wordsState.length);
     setWordState([...wordsState, cloneDeep(wordStateTemplate)]);
   }
 
@@ -28,9 +30,11 @@ export function WordBuilder({ setGameState }) {
       {wordsState.map((wordState, index) => {
         return (
           <WordInput
+            onClick={() => setSelectedInput(index)}
             key={index}
             wordState={wordState}
             wordStateChange={(state) => handleWordStateChange(state, index)}
+            focused={selectedInput === index}
           />
         );
       })}
