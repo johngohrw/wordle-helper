@@ -2,6 +2,7 @@ import { Layout } from "./helper/Layout";
 import "./App.css";
 import { WordBuilder } from "./helper/WordBuilder";
 import { useEffect, useState } from "react";
+
 import {
   bucketing,
   getFiltersFromGameState,
@@ -61,7 +62,13 @@ export default function App() {
   return (
     <div className="min-h-full" style={{ backgroundColor: "#222834" }}>
       <Layout>
-        <div className="mb-6">
+        <div className="mb-6 px-4 flex flex-col text-semibold text-gray-400 justify-center text-center">
+          <div className="mb-2">
+            Enter your guesses below to find possible words for your game
+          </div>
+          <div className="mb-2">Click each square to change its color</div>
+        </div>
+        <div className="mb-10">
           <WordBuilder setGameState={setGameState} />
         </div>
         <div className="flex justify-center mb-6">

@@ -5,7 +5,7 @@ import { WordInput, wordStateTemplate } from "./WordInput";
 
 export function WordBuilder({ setGameState }) {
   const [wordsState, setWordState] = useState([cloneDeep(wordStateTemplate)]);
-  const [selectedInput, setSelectedInput] = useState(0);
+  const [selectedInput, setSelectedInput] = useState(null);
   function handleWordAdd() {
     setSelectedInput(wordsState.length);
     setWordState([...wordsState, cloneDeep(wordStateTemplate)]);
@@ -38,7 +38,7 @@ export function WordBuilder({ setGameState }) {
           />
         );
       })}
-      <div className="flex mt-2 space-x-4">
+      <div className="flex mt-4 space-x-4">
         <button
           onClick={() => {
             if (wordsState.length > 1) {
@@ -49,7 +49,7 @@ export function WordBuilder({ setGameState }) {
           <AiFillMinusCircle
             title="Remove word"
             style={{
-              color: wordsState.length > 1 ? "#e13939" : "#414141",
+              color: wordsState.length > 1 ? "#955050" : "#414141",
               height: "45px",
               width: "45px",
             }}
