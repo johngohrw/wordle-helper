@@ -22,9 +22,9 @@ export function HelpButton({ className, ...rest }) {
           </div>
           <div className="mb-8">
             <p className="text-sm text-gray-100">
-              This tool essentially takes all valid 5-letter words and filters
-              it based on the constraints that you've set. There's 3 different
-              filters that you can make use of:
+              This tool takes all valid 5-letter words and rule them out based
+              on the constraints that you've set. There are 3 different
+              filtering rules that you can make use of:
             </p>
           </div>
           <div className="mb-4">
@@ -32,7 +32,7 @@ export function HelpButton({ className, ...rest }) {
               Remove Letter
             </h4>
           </div>
-          <div className="mb-8 flex">
+          <div className="mb-7 flex">
             <div className="flex-shrink-0 mr-3">
               <Square size={48} color={allStates[0].color} text="E" />
             </div>
@@ -96,6 +96,9 @@ export function HelpButton({ className, ...rest }) {
               </span>{" "}
               in the second position.
             </p>
+          </div>
+          <div className="mb-4 text-gray-500 font-semibold text-sm">
+            Additionally..
           </div>
           <div className="mb-4">
             <h4 className="text-md font-semibold">Wildcards</h4>
