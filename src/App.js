@@ -67,7 +67,7 @@ export default function App() {
           <div className="mb-2">
             Enter your guesses below to find possible words for your game
           </div>
-          <div className="mb-2">Click each square to change its color</div>
+          <div className="mb-2">Click on each square to change its color</div>
         </div>
         <div className="mb-10">
           <WordBuilder setGameState={setGameState} />

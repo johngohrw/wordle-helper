@@ -39,7 +39,7 @@ export function WordList({ words }) {
                   className="px-4 py-2 text-white bg-indigo-700 rounded-md font-semibold focus:ring-2 focus:ring-white"
                   onClick={() => handleShowMore()}
                 >
-                  Show More
+                  Show me more
                 </button>
               </div>
             )}
