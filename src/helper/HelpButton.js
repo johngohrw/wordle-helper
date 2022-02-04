@@ -11,7 +11,7 @@ export function HelpButton({ className, ...rest }) {
         <BsQuestionCircle />
       </button>
       <Modal open={open} setOpen={setOpen}>
-        <div className="xs:px-4 mb-6">
+        <div className="xs:px-4 mb-6" id="helperWindow">
           <div className="mb-4">
             <Dialog.Title
               as="h3"
