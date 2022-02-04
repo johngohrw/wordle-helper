@@ -15,6 +15,7 @@ import possWordsData from "./helper/possWords.json";
 import { LetterRank } from "./helper/LetterRank";
 import { WordList } from "./WordList";
 import { Tabs } from "./Tabs";
+import { BrandBadge } from "./helper/BrandBadge";
 
 export function generatePossibleWords(gameState) {
   const {
@@ -60,7 +61,7 @@ export default function App() {
   }, [searchResult]);
 
   return (
-    <div className="min-h-full" style={{ backgroundColor: "#222834" }}>
+    <div className="min-h-full flex flex-col justify-between">
       <Layout>
         <div className="mb-6 px-4 flex flex-col text-semibold text-gray-400 justify-center text-center">
           <div className="mb-2">
@@ -109,6 +110,9 @@ export default function App() {
           </div>
         )}
       </Layout>
+      <div className="flex justify-end">
+        <BrandBadge />
+      </div>
     </div>
   );
 }

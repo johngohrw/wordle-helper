@@ -25,7 +25,7 @@ export const wordStateTemplate = {
   },
 };
 
-const allStates = [
+export const allStates = [
   { value: "imposs", color: "#3A3A3C" },
   { value: "poss", color: "#B59F3B" },
   { value: "correct", color: "#538D4E" },
