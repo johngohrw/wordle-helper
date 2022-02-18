@@ -18,9 +18,6 @@ export function getFiltersFromGameState(gameState) {
   const posFilter = {};
   const yellowFilter = {};
   const removeFilter = {};
-  console.log("pos", posFilter);
-  console.log("yel", yellowFilter);
-  console.log("rem", removeFilter);
 
   // null check
   if (!gameState) {
