@@ -1,6 +1,5 @@
 import { cloneDeep } from "lodash";
 import { useRef, useEffect } from "react";
-import { AiFillCloseCircle } from "react-icons/ai";
 
 export const wordStateTemplate = {
   0: {
@@ -31,7 +30,14 @@ export const allStates = [
   { value: "correct", color: "#538D4E" },
 ];
 
-export function WordInput({ wordState, wordStateChange, focused, ...rest }) {
+export function WordInput({
+  wordState,
+  wordStateChange,
+  focused,
+  handleDelete,
+  allowDelete,
+  ...rest
+}) {
   const inputRef = useRef();
 
   useEffect(() => {
@@ -67,8 +73,7 @@ export function WordInput({ wordState, wordStateChange, focused, ...rest }) {
   }
 
   return (
-    <div className={`flex`} {...rest}>
-      <div className="w-10" />
+    <div className={`flex items-center relative`} {...rest}>
       <div
         className={`flex space-x-2 p-0.5 border-2 rounded-sm  ${
           focused ? "border-white" : "border-transparent"
@@ -98,6 +103,27 @@ export function WordInput({ wordState, wordStateChange, focused, ...rest }) {
           </div>
         ))}
       </div>
+      <div className="hidden md:flex flex-col lg:flex-row text-sm absolute left-full origin-right">
+        <button
+          title="Reset word"
+          onClick={() => {
+            handleStateReset();
+          }}
+          className="ml-4 p-2 py-1 mb-1 lg:mb-0 flex items-center justify-center rounded-md bg-gray-700 font-semibold text-white"
+        >
+          Reset
+        </button>
+        {allowDelete && (
+          <button
+            title="Delete word"
+            onClick={handleDelete}
+            className="ml-4 p-2 py-1 flex items-center justify-center rounded-md font-semibold text-white"
+            style={{ background: "#6a3a3a" }}
+          >
+            Delete
+          </button>
+        )}
+      </div>
       <input
         autoFocus
         type="text"
@@ -112,21 +138,6 @@ export function WordInput({ wordState, wordStateChange, focused, ...rest }) {
         maxLength="5"
         value={getValueFromState(wordState)}
       />
-      <button
-        title="Reset word"
-        onClick={() => {
-          handleStateReset();
-        }}
-        className="w-10 flex items-center justify-center"
-      >
-        <AiFillCloseCircle
-          style={{
-            height: "21px",
-            width: "21px",
-            color: "#a1a1a1",
-          }}
-        />
-      </button>
     </div>
   );
 }
