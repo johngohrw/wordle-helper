@@ -27,20 +27,7 @@ export function HelpButton({ className, ...rest }) {
               filtering rules that you can make use of:
             </p>
           </div>
-          <div className="mb-4">
-            <h4 className="text-md font-semibold" style={{ color: "#c1c1c1" }}>
-              Remove Letter
-            </h4>
-          </div>
-          <div className="mb-7 flex">
-            <div className="flex-shrink-0 mr-3">
-              <Square size={48} color={allStates[0].color} text="E" />
-            </div>
-            <p className="text-sm text-gray-100 self-center">
-              Gray letters will <b>never</b> be included in any of the words in
-              your results.
-            </p>
-          </div>
+
           <div className="mb-4">
             <h4 className="text-md font-semibold" style={{ color: "#52d75d" }}>
               Correct Letter
@@ -67,12 +54,13 @@ export function HelpButton({ className, ...rest }) {
               as it's fourth letter.
             </p>
           </div>
+
           <div className="mb-4">
             <h4 className="text-md font-semibold" style={{ color: "#f7d63f" }}>
               Letter in Word
             </h4>
           </div>
-          <div className="mb-8 flex">
+          <div className="mb-6 flex">
             <div className="flex-shrink-0 mr-3">
               <Square size={48} color={allStates[1].color} text="H" />
             </div>
@@ -95,6 +83,21 @@ export function HelpButton({ className, ...rest }) {
                 H
               </span>{" "}
               in the second position.
+            </p>
+          </div>
+          <div className="mb-4">
+            <h4 className="text-md font-semibold" style={{ color: "#c1c1c1" }}>
+              Remove Letter
+            </h4>
+          </div>
+          <div className="mb-8 flex">
+            <div className="flex-shrink-0 mr-3">
+              <Square size={48} color={allStates[0].color} text="E" />
+            </div>
+            <p className="text-sm text-gray-100 self-center">
+              Gray letters will not be included in any of the words in your
+              results (unless the same letter is marked as a green letter
+              somewhere else).
             </p>
           </div>
           <div className="mb-4 text-gray-500 font-semibold text-sm">

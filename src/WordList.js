@@ -29,7 +29,7 @@ export function WordList({ words }) {
           <div className="flex flex-col">
             <div className="flex flex-wrap justify-center mb-2">
               {truncatedWords.map((word) => (
-                <Badge text={word} />
+                <Badge key={word} text={word} />
               ))}
               {limit < words.length && <Badge text="..." />}
             </div>

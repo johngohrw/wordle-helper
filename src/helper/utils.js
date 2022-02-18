@@ -18,9 +18,16 @@ export function getFiltersFromGameState(gameState) {
   const posFilter = {};
   const yellowFilter = {};
   const removeFilter = {};
+  console.log("pos", posFilter);
+  console.log("yel", yellowFilter);
+  console.log("rem", removeFilter);
+
+  // null check
   if (!gameState) {
     return { pos: null, neg: null, remove: null };
   }
+
+  // build filters
   gameState.forEach((word) => {
     Object.entries(word).forEach(([key, letter]) => {
       if (letter.letter.length > 0 && !" _".includes(letter.letter)) {
@@ -39,6 +46,12 @@ export function getFiltersFromGameState(gameState) {
       }
     });
   });
+
+  // making sure remove filter doesnt override positive filter
+  Object.keys(posFilter).forEach((key) => {
+    delete removeFilter[key];
+  });
+
   return { pos: posFilter, yellow: yellowFilter, remove: removeFilter };
 }
 
