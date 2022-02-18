@@ -27,7 +27,12 @@ export function getFiltersFromGameState(gameState) {
         if (letter.state === 0) {
           removeFilter[letter.letter] = true;
         } else if (letter.state === 1) {
-          yellowFilter[letter.letter] = JSON.parse(key);
+          yellowFilter[letter.letter] = [
+            ...(yellowFilter.hasOwnProperty(letter.letter)
+              ? yellowFilter[letter.letter]
+              : []),
+            ...[JSON.parse(key)],
+          ];
         } else if (letter.state === 2) {
           posFilter[letter.letter] = JSON.parse(key);
         }
@@ -59,13 +64,15 @@ export function yellowFilterer(wordsArray, yellowFilterer) {
   if (!result) {
     return result;
   }
-  Object.entries(yellowFilterer).every(([letter, index]) => {
-    if (!letter || index === null) {
+  Object.entries(yellowFilterer).every(([letter, indexes]) => {
+    if (!letter || indexes === null || indexes?.length <= 0) {
       return false;
     }
-    index = JSON.parse(index);
-    result = result.filter((word) => word.includes(letter));
-    result = result.filter((word) => !(word[index] === letter));
+    indexes.forEach((index) => {
+      result = result.filter((word) => word.includes(letter));
+      result = result.filter((word) => !(word[index] === letter));
+    });
+
     return true;
   });
   return result;
