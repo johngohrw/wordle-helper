@@ -109,11 +109,11 @@ export default function App() {
             <LetterRank wordList={searchResult} letterRanks={letterRanks} />
           </div>
         )}
-        {!searchDirty && (
+        {/* {!searchDirty && (
           <div className="h-56 flex items-center justify-center text-center text-lg text-gray-700 font-semibold">
             (more features coming soon!)
           </div>
-        )}
+        )} */}
       </Layout>
       <div className="flex justify-end">
         <BrandBadge />
